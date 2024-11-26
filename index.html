@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="author" content="" />
+    <meta name="author" content="Emanuel Quintino" />
     <meta name="creator" content="Reprograma Jucás" />
     <meta
       name="description"
@@ -21,6 +21,25 @@
     <title>Spaceship-Game | Reprograma Jucás</title>
   </head>
   <body>
-   
+    <main class="startGameContainer">
+      <img
+        src="./images/logo-reprograma-jucas.png"
+        alt="Reprograma Jucás"
+        class="logoRJ"
+      />
+
+      <h1>SPACESHIP-GAME</h1>
+
+      <form id="newGameForm">
+        <label for="name" class="srOnly">Nome:</label>
+        <input type="text" id="name" placeholder="Digite seu nome" autofocus required />
+      </form>
+
+      <button class="startGameButton" type="submit" form="newGameForm">Novo Jogo</button>
+
+      <footer>
+        <button class="buttonRank" type="button">Rank</button>
+      </footer>
+    </main>
   </body>
 </html>
