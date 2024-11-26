@@ -1,0 +1,10 @@
+@import url(reset.css);
+
+.container {
+  padding: 0.4rem;
+}
+
+aside .backButton {
+  margin-top: 7.2rem;
+  font-size: clamp(1rem, 2.5vw, 1.6rem);
+}
