@@ -88,14 +88,13 @@ function spaceshipShootRemove() {
       shot.remove();
     });
   });
-
-  requestAnimationFrame(spaceshipShootRemove);
 }
 
 function gameControls(key) {
   switch (key.code) {
     case "Space":
       createShot();
+      spaceshipShootRemove();
       break;
     case "ArrowUp":
     case "KeyW":
@@ -151,4 +150,3 @@ document.addEventListener("keyup", gameControlsCancel);
 
 setPlayerName();
 spaceshipMove();
-spaceshipShootRemove();
