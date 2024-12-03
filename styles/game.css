@@ -27,10 +27,10 @@
     background-position: center;
     background-size: contain;
     position: absolute;
+    bottom: calc(0% + 45px);
+    left: calc(50% - 45px);
     width: 9rem;
     height: 9rem;
-    bottom: calc(0%);
-    left: calc(50% - 45px);
   }
 }
 

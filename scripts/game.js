@@ -12,6 +12,13 @@ const spaceshipWidth = spaceship.offsetWidth;
 const spaceshipHeight = spaceship.offsetHeight;
 
 const spaceshipSpeed = 10; // px to upper
+const shotSpeed = 10; // per second
+const spaceshipDamage = 25; // -25 per shot
+const timeToEndSpecialShot = 30 * 1000; // 30s
+
+let canShot = true;
+let specialShotIsActive = true;
+let shoot = 25; // -25 enemy life
 
 let positionX = 0;
 let positionY = 0;
@@ -22,15 +29,73 @@ function spaceshipMove() {
   moveX += positionX * spaceshipSpeed;
   moveY += positionY * spaceshipSpeed;
 
-  spaceship.style.left = moveX + "px";
-  spaceship.style.bottom = moveY + "px";
+  const discountScreenLimit = spaceshipWidth / 2;
+
+  moveX = Math.max(
+    discountScreenLimit,
+    Math.min(moveX, spaceContainerWidth - discountScreenLimit)
+  );
+
+  moveY = Math.max(
+    -discountScreenLimit,
+    Math.min(moveY, spaceContainerHeight - spaceshipHeight - discountScreenLimit)
+  );
+
+  spaceship.style.left = moveX - discountScreenLimit + "px";
+  spaceship.style.bottom = moveY + discountScreenLimit + "px";
 
   requestAnimationFrame(spaceshipMove);
+}
+
+function createShot(className = "shot") {
+  if (canShot) {
+    const shot = document.createElement("div");
+    shot.classList.add(className);
+
+    if (specialShotIsActive) {
+      shot.classList.add("specialShot");
+
+      const shootSound = new Audio("../audios/shootSpecial.mp3");
+      shootSound.volume = 0.3;
+      shootSound.play();
+
+      shot.style.left = moveX + "px";
+      shot.style.bottom = moveY + spaceshipHeight + spaceshipHeight / 8 + "px";
+    } else {
+      const shootSound = new Audio("../audios/shoot.mp3");
+      shootSound.volume = 1;
+      shootSound.play();
+
+      shot.style.left = moveX + "px";
+      shot.style.bottom = moveY + spaceshipHeight + spaceshipHeight / 4 + "px";
+    }
+
+    spaceContainer.appendChild(shot);
+
+    canShot = false;
+
+    setTimeout(() => {
+      canShot = true;
+    }, 1000 / shotSpeed);
+  }
+}
+
+function spaceshipShootRemove() {
+  const shoots = document.querySelectorAll(".shot");
+
+  shoots.forEach((shot) => {
+    shot.addEventListener("animationend", () => {
+      shot.remove();
+    });
+  });
+
+  requestAnimationFrame(spaceshipShootRemove);
 }
 
 function gameControls(key) {
   switch (key.code) {
     case "Space":
+      createShot();
       break;
     case "ArrowUp":
     case "KeyW":
@@ -86,3 +151,4 @@ document.addEventListener("keyup", gameControlsCancel);
 
 setPlayerName();
 spaceshipMove();
+spaceshipShootRemove();
