@@ -25,6 +25,11 @@ let positionY = 0;
 let moveX = spaceContainerWidth / 2;
 let moveY = 0;
 
+let enemiesDifficultyLevel = 1;
+let pointsToIncrementDifficultyLevel = 1000; // each 1000 points
+let enemyX = Math.random() * spaceContainerWidth;
+let enemyY = 100;
+
 function spaceshipMove() {
   moveX += positionX * spaceshipSpeed;
   moveY += positionY * spaceshipSpeed;
@@ -90,6 +95,67 @@ function spaceshipShootRemove() {
   });
 }
 
+class EnemySpaceship {
+  constructor(enemyNumber = 1, src, alt, className) {
+    this.enemyNumber = enemyNumber;
+    this.life = enemyNumber == 1 ? 100 : enemyNumber == 2 ? 300 : 600;
+    this.score = enemyNumber == 1 ? 250 : enemyNumber == 2 ? 500 : 1000;
+    this.damage = enemyNumber == 1 ? 20 : enemyNumber == 2 ? 30 : 50;
+
+    this.flyCategory = (Math.random() - 0.5) * 3; // positive or negative random number
+
+    this.x = 0;
+    this.y = 0;
+
+    this.offScreenTopElementDiscount = 200; // px
+
+    this.#createElement(src, alt, className);
+  }
+
+  #createElement(src, alt, className) {
+    this.element = document.createElement("img");
+    this.element.src = src;
+    this.element.alt = alt;
+    this.element.className = className;
+
+    this.element.style.position = "absolute";
+    this.element.style.top = `${this.offScreenTopElementDiscount}px`; // top: -200px
+
+    document.querySelector(".enemies").appendChild(this.element);
+  }
+}
+
+function createEnemies() {
+  enemiesDifficultyLevel =
+    score == 0 ? 1 : Math.ceil(score / pointsToIncrementDifficultyLevel);
+
+  const delayIntervalTime = Math.max(
+    500,
+    Math.random() * 1000 + 1000 / enemiesDifficultyLevel
+  );
+
+  setInterval(() => {
+    let randomEnemyType = Math.ceil(Math.random() * 100);
+
+    if (randomEnemyType <= 50) {
+      randomEnemyType = 1; // 50%
+    } else if (randomEnemyType <= 80) {
+      randomEnemyType = 2; // 30%
+    } else if (randomEnemyType <= 95) {
+      randomEnemyType = 3; // 15%
+    } else if (randomEnemyType <= 100) {
+      // 5%
+    }
+
+    new EnemySpaceship(
+      randomEnemyType,
+      `../images/enemy${randomEnemyType}.gif`,
+      `enemy${randomEnemyType}`,
+      `enemy${randomEnemyType}`
+    ); // 20%
+  }, 1000);
+}
+
 function gameControls(key) {
   switch (key.code) {
     case "Space":
@@ -150,3 +216,4 @@ document.addEventListener("keyup", gameControlsCancel);
 
 setPlayerName();
 spaceshipMove();
+createEnemies();

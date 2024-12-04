@@ -62,3 +62,20 @@
   animation: shotAnimation 500ms linear;
   animation-fill-mode: forwards;
 }
+
+.enemies {
+  .enemy1 {
+    width: 9rem;
+    height: 9rem;
+  }
+
+  .enemy2 {
+    width: 9rem;
+    height: 9rem;
+  }
+
+  .enemy3 {
+    width: 16rem;
+    height: 16rem;
+  }
+}
