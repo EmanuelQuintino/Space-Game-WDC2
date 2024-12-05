@@ -1,8 +1,8 @@
 const spaceContainer = document.querySelector(".spaceContainer");
 const spaceship = document.querySelector(".spaceship");
 const playerName = document.querySelector(".playerName");
-const life = document.querySelector(".life");
-const score = document.querySelector(".score");
+const playerLife = document.querySelector(".life");
+const playerScore = document.querySelector(".score");
 const gameOverButton = document.querySelector(".gameOver button");
 
 const spaceContainerWidth = spaceContainer.offsetWidth;
@@ -19,6 +19,8 @@ const timeToEndSpecialShot = 30 * 1000; // 30s
 let canShot = true;
 let specialShotIsActive = true;
 let shoot = 25; // -25 enemy life
+
+let score = 0;
 
 let positionX = 0;
 let positionY = 0;
