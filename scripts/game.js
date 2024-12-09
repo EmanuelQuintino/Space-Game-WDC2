@@ -17,7 +17,7 @@ const spaceshipDamage = 25; // -25 per shot
 const timeToEndSpecialShot = 30 * 1000; // 30s
 
 let canShot = true;
-let specialShotIsActive = true;
+let specialShotIsActive = false;
 let shoot = 25; // -25 enemy life
 
 let enemies = [];
@@ -189,6 +189,11 @@ function animateFlyEnemies() {
   });
 
   requestAnimationFrame(animateFlyEnemies);
+}
+
+function collisionEnemiesShot() {
+  const enemiesDOM = document.querySelectorAll(".enemies img");
+  const shootsDOM = document.querySelectorAll(".shot");
 }
 
 function gameControls(key) {
